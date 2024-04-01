@@ -3,9 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <title>Rock-Sccisors-Paper</title>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+      body button {
+        width: 100px;
+        height: 30px;
+      }
+    </style>
   </head>
 
   <body>
+    <button class="selectButton" id="rock">rock</button>
+    <button class="selectButton" id="sccisors">sccisors</button>
+    <button class="selectButton" id="paper">paper</button>
+
+    <div class="display">
+      <p class="resultText"></p>
+      <p claas="playerWinCount"></p>
+      <p class="computerWinCount"></p>
+    </div>
   </body>
 </html>

@@ -17,37 +17,46 @@ var capitalize = function(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
+    computerSelection = getComputerChoice()
     playerSelection_lower = playerSelection.toLowerCase();
     computerSelection_lower = computerSelection.toLowerCase();
+    let result = "";
     if (playerSelection_lower === "rock" && computerSelection_lower === "sccisors" ||
         playerSelection_lower === "sccisors" && computerSelection_lower === "paper" ||
         playerSelection_lower === "paper" && computerSelection_lower === "rock") {
-        let result = "You win! " + capitalize(playerSelection_lower) + "beats " + capitalize(computerSelection_lower);
         playerWin++;
-        return result;
+        result = `You win! ${capitalize(playerSelection_lower)}  beats ${capitalize(computerSelection_lower)} (You)  ${playerWin} - ${computerWin}  (Cpu)`;
     }
     else if (playerSelection_lower === computerSelection) {
+        result = `Drow (You)  ${playerWin} - ${computerWin}  (Cpu)`
         
-        return "Drow";
     }
     else {
         computerWin++;
-        let result = "You lose! " + capitalize(computerSelection_lower) + " beats " + capitalize(playerSelection_lower);
-        return result;
+        result = `You lose! ${capitalize(computerSelection_lower)}  beats ${capitalize(playerSelection_lower)} (You)  ${playerWin} - ${computerWin}  (Cpu)`;
     }
+    return result;
 }
 
-function playGame(rounds) {
-    var playerWin = 0; // グローバル変数として playerWin を宣言
-    var computerWin = 0;
-    for (let i = 0; i < rounds; i++) {
-        let computerSelection = getComputerChoice();
-        let playerSelection = prompt("Enter your selection.(Rock Sccisors Paper)")
-        console.log(playRound(computerSelection, playerSelection));
-    }
-    console.log("Game End. Score = (You)" + playerWin + " - " + computerWin + "(Cpu)");
+function showGameWinner() {
+    winner = computerWin > playerWin ? "Computer" : "You" 
+    result = `Game Winner is ${winner}`
+    return result;
+    
 }
 
-var rounds = 3;
-playGame(rounds);
+var computerWin = 0;
+var playerWin = 0;
+const buttons = document.querySelectorAll(".selectButton");
+var resultText = document.querySelector(".resultText");
+
+buttons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+        text = playRound(event.target.id);
+        if (computerWin >= 5 || playerWin >= 5) {
+            text = showGameWinner()
+        }
+        resultText.textContent = text;
+    })
+});
